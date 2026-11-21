@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hussamoalmasre2009-source.github.io/jordan-story/sitemap.xml

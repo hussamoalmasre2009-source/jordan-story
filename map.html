@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="خريطة الأردن والاتجاهات والطرق وطرق مشاهدة معالمها بزاوية 360 درجة.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_JO">
+  <meta property="og:title" content="خريطة الأردن والاتجاهات">
+  <meta property="og:description" content="خريطة تفاعلية، حساب الطرق، واتجاهات جوجل ماب ومشاهد 360 درجة.">
+  <title>خريطة الأردن والاتجاهات</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="hussam.html"><img class="brand-mark" src="brand-mark.svg" alt=""><span>الأردن <small>حكاية أرض</small></span></a>
+    <nav class="main-nav" aria-label="التنقل الرئيسي">
+      <a href="hussam.html">الرئيسية</a>
+      <a href="petra.html">البتراء</a>
+      <a href="nature.html">الطبيعة</a>
+      <a href="culture.html">الثقافة</a>
+      <a class="active" aria-current="page" href="map.html">الخريطة</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="map-hero">
+      <div>
+        <p class="eyebrow eyebrow-dark">خطط رحلتك بسهولة</p>
+        <h1>خريطة الأردن والاتجاهات</h1>
+        <p>اعثر على الوجهات، افتح الاتجاهات في جوجل ماب، وتصفح المشاهد بزاوية 360 درجة.</p>
+      </div>
+    </section>
+
+    <section class="map-section section-wrap" aria-label="خريطة جوجل للأردن">
+      <div class="map-toolbar">
+        <label for="map-route-origin">نقطة الانطلاق</label>
+        <input id="map-route-origin" type="text" value="عمّان، الأردن" placeholder="مثال: عمّان، الأردن">
+        <label for="map-route-destination">الوجهة</label>
+        <select id="map-route-destination">
+          <option value="البتراء، الأردن">البتراء</option>
+          <option value="وادي رم، الأردن">وادي رم</option>
+          <option value="البحر الميت، الأردن">البحر الميت</option>
+          <option value="جرش، الأردن">جرش</option>
+          <option value="العقبة، الأردن">العقبة</option>
+          <option value="عجلون، الأردن">عجلون</option>
+        </select>
+        <button class="map-route-button" id="map-route-button" type="button">فتح الاتجاهات والطرق</button>
+      </div>
+      <iframe
+        id="jordan-map"
+        title="خريطة تفاعلية للأردن"
+        src="https://www.google.com/maps?q=30.3285,35.4444&z=7&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+      </iframe>
+    </section>
+
+    <section class="section-wrap panorama-section">
+      <div class="section-heading">
+        <p class="eyebrow eyebrow-dark">مشاهد بانورامية</p>
+        <h2>صور بزاوية 360 درجة</h2>
+        <p>اختر معلمًا لفتح مشهد Google Street View ودوّر المشهد 360 درجة.</p>
+      </div>
+      <div class="panorama-grid">
+        <article class="panorama-card">
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/Al_Khazneh_02.jpg/1280px-Al_Khazneh_02.jpg" alt="الخزنة في البتراء">
+          <div><span>البتراء</span><h3>الخزنة الوردية</h3><a href="https://www.google.com/maps/search/?api=1&query=Petra+Treasury+Jordan" target="_blank" rel="noopener noreferrer">افتح المشهد 360°</a></div>
+        </article>
+        <article class="panorama-card">
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Wadi_rum_desert.jpg/1280px-Wadi_rum_desert.jpg" alt="صحراء وادي رم">
+          <div><span>وادي رم</span><h3>الصحراء والجبال</h3><a href="https://www.google.com/maps/search/?api=1&query=Wadi+Rum+Jordan&query_place_id=ChIJiWUKx4COVRURLjWkLQvJLXs" target="_blank" rel="noopener noreferrer">افتح المشهد 360°</a></div>
+        </article>
+        <article class="panorama-card">
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Amman%2C_City_centre%2C_Jordan.jpg/1280px-Amman%2C_City_centre%2C_Jordan.jpg" alt="وسط عمّان">
+          <div><span>عمّان</span><h3>وسط المدينة</h3><a href="https://www.google.com/maps/search/?api=1&query=Downtown+Amman+Jordan" target="_blank" rel="noopener noreferrer">افتح المشهد 360°</a></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>شكراً لاستخدامكم موقع الأردن — حكاية أرض</span>
+    <span>تصميم: حسام المصري · <a href="tel:0786189116" dir="ltr">0786189116</a> · <a href="https://wa.me/962786189116?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7" target="_blank" rel="noopener noreferrer">راسلنا عبر واتساب</a></span>
+  </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/962786189116?text=مرحبا، أرغب بالاستفسار عن رحلة في الأردن" target="_blank" rel="noopener noreferrer" aria-label="راسلنا على واتساب">واتساب <span aria-hidden="true">↗</span></a>
+  <script src="translation.js" defer></script>
+  <script src="accessibility.js" defer></script>
+  <script src="map.js" defer></script>
+</body>
+</html>
