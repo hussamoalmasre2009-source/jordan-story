@@ -187,7 +187,7 @@ html[dir="ltr"] .main-nav a.active::after { right: auto; left: 0; }
 .a11y-panel {
   position: fixed;
   z-index: 9999;
-  top: 96px;
+  top: 76px;
   right: 16px;
   width: min(330px, calc(100vw - 32px));
   padding: 16px;
@@ -202,10 +202,15 @@ html[dir="ltr"] .main-nav a.active::after { right: auto; left: 0; }
 .a11y-toggle {
   position: fixed;
   z-index: 9998;
-  right: 16px;
-  bottom: 82px;
-  width: 52px;
+  top: 16px;
+  left: 16px;
+  min-width: 52px;
   height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 14px;
   border: 2px solid #fff;
   border-radius: 50%;
   color: #fff;
@@ -213,6 +218,11 @@ html[dir="ltr"] .main-nav a.active::after { right: auto; left: 0; }
   box-shadow: 0 8px 24px rgba(0,0,0,.25);
   cursor: pointer;
   font-size: 24px;
+}
+.a11y-toggle strong {
+  color: inherit;
+  font: 700 12px "Cairo", Arial, sans-serif;
+  white-space: nowrap;
 }
 .a11y-panel h2 { margin: 0 0 12px; font-size: 20px; }
 .a11y-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -266,8 +276,9 @@ body.a11y-paused *, body.a11y-paused *::before, body.a11y-paused *::after {
 }
 
 @media (max-width: 700px) {
-  .a11y-toggle { right: 14px; bottom: 76px; }
-  .a11y-panel { top: 148px; right: 14px; max-height: calc(100vh - 164px); overflow-y: auto; }
+  .a11y-toggle { top: 10px; left: 10px; min-width: 48px; height: 48px; padding: 0 11px; font-size: 20px; }
+  .a11y-toggle strong { font-size: 10px; }
+  .a11y-panel { top: 66px; left: 10px; right: 10px; max-height: calc(100vh - 82px); overflow-y: auto; }
   .map-toolbar { grid-template-columns: 1fr; }
   .map-toolbar label { margin-top: 4px; }
   .map-section iframe { height: 420px; }

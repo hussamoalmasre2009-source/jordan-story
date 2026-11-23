@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.createElement("button");
   toggle.type = "button";
   toggle.className = "a11y-toggle";
-  toggle.textContent = "♿";
+  toggle.innerHTML = '<span aria-hidden="true">♿</span><strong>تسهيل الوصول</strong>';
   toggle.setAttribute("aria-label", "فتح أدوات ذوي الاحتياجات الخاصة");
   toggle.setAttribute("aria-expanded", "false");
 
@@ -127,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
       la: "Ad contentum principale"
     }[language] || "Skip to main content";
     toggle.setAttribute("aria-label", copy.toggle);
+    toggle.querySelector("strong").textContent = copy.title;
     panel.setAttribute("aria-label", copy.panel);
     panel.querySelector("h2").textContent = copy.title;
     panel.querySelectorAll(".a11y-action").forEach((button, index) => {
