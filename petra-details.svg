@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="title">
+  <title id="title">تفاصيل من عمارة البتراء</title>
+  <defs>
+    <linearGradient id="stone" x2="0" y2="1"><stop stop-color="#d89570"/><stop offset="1" stop-color="#6f3e3b"/></linearGradient>
+    <linearGradient id="shade" x2="0" y2="1"><stop stop-color="#432f34"/><stop offset="1" stop-color="#241f26"/></linearGradient>
+    <pattern id="lines" width="90" height="36" patternUnits="userSpaceOnUse"><path d="M0 12c28-9 58 8 90-3M-12 29c32-8 59 8 105-4" fill="none" stroke="#f1bd91" stroke-opacity=".22" stroke-width="3"/></pattern>
+  </defs>
+  <path fill="#322831" d="M0 0h900v600H0z"/>
+  <path fill="url(#stone)" d="M0 0h900v600H0z"/>
+  <path fill="url(#lines)" d="M0 0h900v600H0z"/>
+  <path fill="#bd7a5e" d="m95 600 42-324 53-47v-73l66-42 194-45 194 45 66 42v73l53 47 42 324z"/>
+  <path fill="#e4ad7e" d="m128 276 62-59h520l62 59zm62-120 66-42 194-45 194 45 66 42-18 17-57-37-185-40-185 40-57 37z"/>
+  <path fill="#724443" d="M155 297h590v18H155zm0 140h590v17H155zm0 140h590v17H155z"/>
+  <g fill="#e4ad7e">
+    <path d="M178 283h28v293h-28zm81-21h22v314h-22zm78-13h20v327h-20zm78-9h18v336h-18zm78 9h20v327h-20zm78 13h22v314h-22zm81 21h28v293h-28z"/>
+  </g>
+  <g fill="#4a3438">
+    <path d="M206 246a27 27 0 0 1 54 0v31h-54zm83-19a25 25 0 0 1 50 0v34h-50zm272 0a25 25 0 0 1 50 0v34h-50zm83 19a27 27 0 0 1 54 0v31h-54z"/>
+    <path d="M230 167h36v56h-36zm73-19h32v61h-32zm259 0h32v61h-32zm73 19h36v56h-36z"/>
+  </g>
+  <path fill="#edc093" d="M354 61h105v45l-52 36-53-36zm39 106h27v31h-27z"/>
+  <path fill="url(#shade)" stroke="#e4ad7e" stroke-width="8" d="M334 577V457a74 74 0 0 1 148 0v120z"/>
+  <path fill="#292329" d="M0 560c196-44 285-2 436 18 174 23 288-36 464 3v19H0z"/>
+</svg>

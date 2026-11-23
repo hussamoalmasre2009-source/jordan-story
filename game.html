@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="امشِ في الأردن، اجمع الشواهد، واكتشف مراحل تفاعلية من عمّان إلى العقبة.">
+  <meta name="theme-color" content="#10241f">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="لعبة الأردن التفاعلية | حكاية أرض">
+  <meta property="og:description" content="رحلة مشي تفاعلية بين معالم الأردن.">
+  <title>لعبة الأردن التفاعلية | حكاية أرض</title>
+  <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body class="game-page page-game">
+  <header class="site-header">
+    <a class="brand" href="hussam.html"><img class="brand-mark" src="brand-mark.svg" alt=""><span><strong>حسام المصري</strong><small>حكاية أرض</small></span></a>
+    <nav class="main-nav" aria-label="التنقل الرئيسي">
+      <a href="hussam.html">الرئيسية</a><a href="petra.html">البتراء</a><a href="nature.html">الطبيعة</a><a href="culture.html">الثقافة</a><a href="map.html">الخريطة</a><a class="active" aria-current="page" href="game.html">اللعبة</a>
+    </nav>
+  </header>
+  <main>
+    <section class="game-hero">
+      <div class="game-hero-glow" aria-hidden="true"></div>
+      <div class="game-hero-content">
+        <p class="game-kicker">لعبة الأردن التفاعلية <span aria-hidden="true">/ 2054</span></p>
+        <h1>رحلة عبر الأردن</h1>
+        <p>اركض واقفز عبر معالم الأردن، اجمع الشواهد، وتجاوز الفجوات والعقارب. تزداد صعوبة الطريق مع كل مرحلة.</p>
+      </div>
+      <div class="game-orbit game-orbit-one" aria-hidden="true"></div>
+      <div class="game-orbit game-orbit-two" aria-hidden="true"></div>
+    </section>
+
+    <section class="game-wrap" aria-label="اللعبة">
+      <div class="game-toolbar">
+        <div class="game-toolbar-title">
+          <span class="game-live-dot" aria-hidden="true"></span>
+          <span id="game-status" aria-live="polite">جاهز للانطلاق</span>
+        </div>
+        <button class="game-sound-button" id="sound-toggle" type="button" aria-pressed="false" aria-label="صوت اللعبة">الصوت متوقف</button>
+      </div>
+
+      <div class="game-grid">
+        <section class="game-console" aria-label="مشهد اللعبة">
+          <div class="game-hud">
+            <div class="game-location">
+              <span class="game-hud-label">المرحلة</span>
+              <strong id="stage-name">عمّان</strong>
+            </div>
+            <div class="game-meter">
+              <div class="game-meter-heading"><span>الصحة</span><strong id="health-value">100%</strong></div>
+              <div class="game-meter-track"><span id="health-bar" class="health-fill"></span></div>
+            </div>
+            <div class="game-meter">
+              <div class="game-meter-heading"><span>الماء</span><strong id="water-value">100%</strong></div>
+              <div class="game-meter-track"><span id="water-bar" class="water-fill"></span></div>
+            </div>
+            <div class="game-collect-count"><span aria-hidden="true">✦</span><span id="collect-count">0 / 3</span></div>
+          </div>
+
+          <div class="game-canvas-frame">
+            <canvas id="game-canvas" width="960" height="540" role="img" aria-label="مشهد اللعبة"></canvas>
+            <div class="game-canvas-scan" aria-hidden="true"></div>
+            <div class="game-canvas-label"><span id="canvas-location">عمّان</span><span>JORDAN / <span id="field-code">FIELD 01</span></span></div>
+          </div>
+
+          <div class="game-action-row">
+            <p id="objective-text" class="game-objective" aria-live="polite">اركض واقفز فوق الفجوات والعقارب، واجمع الشواهد الثلاثة للوصول إلى خط النهاية.</p>
+            <div class="game-actions">
+              <button id="start-game" class="game-primary-button" type="button">ابدأ الرحلة</button>
+              <button id="restart-stage" class="game-secondary-button" type="button">إعادة المرحلة</button>
+              <button id="pause-game" class="game-secondary-button" type="button">إيقاف مؤقت</button>
+            </div>
+          </div>
+
+          <div class="game-mobile-controls" aria-label="تحكّم بالحركة">
+            <span class="game-controls-title">تحكّم بالحركة</span>
+            <div class="game-dpad">
+              <button type="button" data-jump aria-label="اقفز">↑</button>
+              <button type="button" data-move="left" aria-label="تحرّك لليسار">←</button>
+              <button type="button" data-move="right" aria-label="تحرّك لليمين">→</button>
+            </div>
+          </div>
+          <p class="game-keyboard-hint">تحرّك بـ ← → أو A / D، واقفز بـ ↑ أو W أو مسافة. على الهاتف استخدم أزرار الحركة والقفز.</p>
+        </section>
+
+        <aside class="game-side-panel">
+          <div class="game-panel-heading">
+            <p class="game-panel-eyebrow">JORDAN FIELD GUIDE</p>
+            <h2>المراحل</h2>
+            <p id="stage-description">اقفز فوق العقبات واجمع الشواهد الثلاثة. تزداد صعوبة كل مرحلة.</p>
+          </div>
+          <ol class="game-stage-list" id="stage-list" aria-label="التنقل بين المراحل"></ol>
+          <div class="game-tip-card">
+            <span class="game-tip-icon" aria-hidden="true">⌁</span>
+            <p id="game-tip">ابقَ على المسار، وراقب الماء قبل أن تتابع رحلتك.</p>
+          </div>
+          <a class="game-back-link" href="hussam.html"><span aria-hidden="true">↗</span> ارجع للموقع</a>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <span>شكراً لاستخدامكم موقع الأردن — حكاية أرض</span>
+    <span>تصميم: حسام المصري</span>
+  </footer>
+  <script src="translation.js" defer></script>
+  <script src="jordan-game.js" defer></script>
+  <script src="accessibility.js" defer></script>
+</body>
+</html>

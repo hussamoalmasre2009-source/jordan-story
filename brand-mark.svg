@@ -1,12 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="شعار الأردن حكاية أرض">
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" role="img" aria-label="واجهة البتراء مع شماغ">
   <defs>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#d8b979"/>
-      <stop offset="1" stop-color="#9b653d"/>
+    <linearGradient id="stone" x1="20" y1="13" x2="109" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f0c3b4"/>
+      <stop offset=".52" stop-color="#c78079"/>
+      <stop offset="1" stop-color="#965451"/>
     </linearGradient>
+    <radialGradient id="field" cx="0" cy="0" r="1" gradientTransform="matrix(0 96 -96 0 45 21)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#244e45"/>
+      <stop offset="1" stop-color="#102c29"/>
+    </radialGradient>
+    <pattern id="weave" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M0 0h8M0 4h8M0 0v8M4 0v8" fill="none" stroke="#f3e7d2" stroke-opacity=".8" stroke-width="1.15"/>
+      <path d="m0 0 8 8m-8 0 8-8" fill="none" stroke="#6b2632" stroke-opacity=".7" stroke-width=".8"/>
+    </pattern>
+    <clipPath id="shemagh">
+      <path d="M38 40c5-12 15-19 26-19s21 7 26 19l-4 9-7-5-7 9-8-6-8 7-7-7-7 6-7-7-5 5z"/>
+    </clipPath>
   </defs>
-  <circle cx="32" cy="32" r="30" fill="url(#gold)"/>
-  <path d="M18 43c10-3 15-10 18-23 3 7 7 12 12 16-7 1-12 5-16 12z" fill="#183c36"/>
-  <path d="M23 40c6-2 10-5 14-10" fill="none" stroke="#fff8e8" stroke-width="2.5" stroke-linecap="round"/>
-  <circle cx="43" cy="22" r="4" fill="#fff8e8"/>
+  <circle cx="64" cy="64" r="62" fill="#c6a267"/>
+  <circle cx="64" cy="64" r="58.5" fill="#183c36" stroke="#f2dbad" stroke-width="1.2"/>
+  <circle cx="64" cy="64" r="52" fill="url(#field)" stroke="#967747" stroke-width="1"/>
+  <path d="M28 103V73l12-13 12 13v30m0-31 12-14 12 14v31m0-31 12-14 12 14v31" fill="none" stroke="url(#stone)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  <path d="M24 72h80l-8-9H32zm8 33h64m-68 5h72" fill="url(#stone)" stroke="#efd5a8" stroke-linejoin="round" stroke-width="1.5"/>
+  <path d="M54 72V53c0-7 4-12 10-12s10 5 10 12v19" fill="#15352f" stroke="url(#stone)" stroke-width="2"/>
+  <path d="M58 44v-5l6-5 6 5v5" fill="none" stroke="#edcba0" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+  <path d="M38 40c5-12 15-19 26-19s21 7 26 19l-4 9-7-5-7 9-8-6-8 7-7-7-7 6-7-7-5 5z" fill="#a8404d" stroke="#f1d8ae" stroke-linejoin="round" stroke-width="1.7"/>
+  <path d="M37 20h58v42H37z" fill="url(#weave)" clip-path="url(#shemagh)"/>
+  <path d="M42 42c8-7 14-10 22-10s15 3 22 10" fill="none" stroke="#fff0d6" stroke-linecap="round" stroke-opacity=".7" stroke-width="1.2"/>
+  <path d="M63 12 64.4 16.7 68.7 14.5 66.4 18.9 70.9 20.9 66 21.8 67.6 26.3 63.8 22.9 61.3 26.9 61.2 21.9 56.4 22.7 60 19.1 56.8 15.5 61.6 16.3Z" fill="#e5c27e"/>
+  <path d="M24 91h6m68 0h6M34 115l-2 2m64-2 2 2" stroke="#e0bf83" stroke-linecap="round" stroke-width="1.4"/>
 </svg>
