@@ -216,9 +216,15 @@ document.addEventListener("DOMContentLoaded", () => {
       let voice = null;
       const voices = window.speechSynthesis.getVoices();
       if (voices.length) {
-        voice = voices.find((item) => item.lang && item.lang.toLowerCase().startsWith(speechLanguage))
-          || voices.find((item) => item.default)
-          || null;
+        voice = voices.find((item) => item.lang && item.lang.toLowerCase().startsWith(speechLanguage)) || null;
+        if (!voice) {
+          reader.hidden = false;
+          readerText.textContent = fullText;
+          readerText.scrollTop = 0;
+          status.textContent = copy.noVoice;
+          readerText.focus();
+          return;
+        }
       }
 
       let chunkIndex = 0;
@@ -239,6 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
         utterance.onerror = () => {
           status.textContent = copy.noVoice;
         };
+        if (typeof window.speechSynthesis.resume === "function") window.speechSynthesis.resume();
         window.speechSynthesis.speak(utterance);
       };
 
