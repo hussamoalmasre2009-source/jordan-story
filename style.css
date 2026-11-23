@@ -581,6 +581,35 @@ body { background: #fcfaf6; }
   margin-bottom: 14px;
 }
 .game-toolbar-title { display: flex; align-items: center; gap: 10px; color: #c1d5ca; font-size: 12px; }
+.game-character-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 9px 11px;
+  border: 1px solid rgba(141, 195, 166, .16);
+  border-radius: 10px;
+  color: #c1d5ca;
+  background: rgba(14, 29, 28, .72);
+  font-size: 11px;
+}
+.game-character-options { display: flex; gap: 7px; }
+.game-character-button {
+  min-width: 74px;
+  min-height: 38px;
+  border: 1px solid rgba(167, 206, 184, .24);
+  border-radius: 999px;
+  color: #cfe7d9;
+  background: rgba(21, 43, 39, .78);
+  cursor: pointer;
+  font: 700 11px "Cairo", Arial, sans-serif;
+}
+.game-character-button.active {
+  border-color: #a6efc8;
+  color: #09201a;
+  background: #a6efc8;
+}
 .game-live-dot { width: 8px; height: 8px; border-radius: 50%; background: #86e1ae; box-shadow: 0 0 15px #70e4aa; }
 .game-sound-button, .game-primary-button, .game-secondary-button {
   min-height: 42px;
@@ -717,6 +746,8 @@ html[dir="ltr"] .game-stage-button:hover:not(:disabled) { transform: translateX(
 }
 @media (max-width: 700px) {
   .game-page .site-header { padding-bottom: 0; }
+  .game-character-picker { margin-bottom: 10px; }
+  .game-character-button { min-width: 68px; min-height: 40px; }
   .game-page .main-nav { overflow-x: auto; justify-content: flex-start; gap: 20px; scrollbar-width: none; }
   .game-page .main-nav::-webkit-scrollbar { display: none; }
   .game-page .main-nav a { flex: 0 0 auto; }

@@ -9,7 +9,7 @@
   <meta property="og:title" content="لعبة الأردن التفاعلية | حكاية أرض">
   <meta property="og:description" content="رحلة مشي تفاعلية بين معالم الأردن.">
   <title>لعبة الأردن التفاعلية | حكاية أرض</title>
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body class="game-page page-game">
   <header class="site-header">
@@ -37,6 +37,14 @@
           <span id="game-status" aria-live="polite">جاهز للانطلاق</span>
         </div>
         <button class="game-sound-button" id="sound-toggle" type="button" aria-pressed="false" aria-label="صوت اللعبة">الصوت متوقف</button>
+      </div>
+
+      <div class="game-character-picker" aria-label="اختر شخصيتك">
+        <span>اختر البطل</span>
+        <div class="game-character-options">
+          <button type="button" class="game-character-button active" data-character="boy" aria-pressed="true">ولد</button>
+          <button type="button" class="game-character-button" data-character="girl" aria-pressed="false">بنت</button>
+        </div>
       </div>
 
       <div class="game-grid">
@@ -104,7 +112,7 @@
     <span>تصميم: حسام المصري</span>
   </footer>
   <script src="translation.js" defer></script>
-  <script src="jordan-game.js" defer></script>
+  <script src="jordan-game.js?v=7" defer></script>
   <script src="accessibility.js?v=6" defer></script>
 </body>
 </html>

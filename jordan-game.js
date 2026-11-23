@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       needArtifacts: "اجمع الشواهد الثلاثة أولاً.",
       stageClear: "اكتملت المرحلة! استعد للمحطة التالية.",
       gameClear: "أكملت الرحلة عبر الأردن كلها. فوز مستحق!",
+      finalMessage: "انتهت رحلتك عبر الأردن! جمعت الشواهد وتخطّيت كل المراحل. مشوارك انتهى بنجاح.",
       gameOver: "انتهت صحتك. أعد المرحلة وحاول القفز فوق العقبات.",
       pauseMessage: "أوقفنا الرحلة مؤقتاً. خذ وقتك ثم تابع.",
       readyMessage: "تحرّك يميناً، اقفز فوق الفجوات والعقارب، واجمع الشواهد.",
@@ -98,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       needArtifacts: "Collect all three markers first.",
       stageClear: "Stage complete! Prepare for the next stop.",
       gameClear: "You completed the whole Jordan trail. You win!",
+      finalMessage: "Your Jordan journey has ended. You collected the markers and crossed every stage. You made it!",
       gameOver: "You ran out of health. Retry and jump over the hazards.",
       pauseMessage: "Journey paused. Take a moment, then continue.",
       readyMessage: "Move right, jump over gaps and scorpions, and collect the markers.",
@@ -141,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
       needArtifacts: "先に3つの記念品を集めてください。",
       stageClear: "ステージクリア！次の目的地へ進みましょう。",
       gameClear: "ヨルダンの旅をすべて達成しました。勝利です！",
+      finalMessage: "ヨルダンの旅が終了しました。すべてのしるしを集め、全ステージを突破しました！",
       gameOver: "体力が尽きました。障害物をジャンプして再挑戦しましょう。",
       pauseMessage: "旅を一時停止しました。準備ができたら再開しましょう。",
       readyMessage: "右へ進み、穴やサソリをジャンプで避けて記念品を集めましょう。",
@@ -185,6 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
     needArtifacts: "Сначала соберите все три знака.",
     stageClear: "Уровень пройден! Готовьтесь к следующей остановке.",
     gameClear: "Вы прошли весь маршрут по Иордании. Победа!",
+    finalMessage: "Ваше путешествие по Иордании завершено. Вы собрали знаки и прошли все этапы!",
     gameOver: "Здоровье закончилось. Попробуйте снова и перепрыгивайте препятствия.",
     pauseMessage: "Путешествие приостановлено. Отдохните и продолжайте.",
     readyMessage: "Двигайтесь вправо, перепрыгивайте пропасти и скорпионов, собирайте знаки.",
@@ -228,6 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
     needArtifacts: "Primum tria signa collige.",
     stageClear: "Gradus perfectus! Ad stationem proximam para.",
     gameClear: "Totum iter per Iordaniam perfecisti. Victoria!",
+    finalMessage: "Iter tuum per Iordaniam finitum est. Omnia itinera superasti!",
     gameOver: "Sanitas tua defecit. Iterum conare et super impedimenta salta.",
     pauseMessage: "Iter pausatum. Requiesce, deinde perge.",
     readyMessage: "Ad dextram move, super hiatus scorpionesque salta, signa collige.",
@@ -247,9 +252,11 @@ document.addEventListener("DOMContentLoaded", () => {
     lose: "Finis ludi"
   };
   const initialUnlocked = Number(localStorage.getItem("jordan-game-unlocked"));
+  const initialCharacter = localStorage.getItem("jordan-game-character") === "girl" ? "girl" : "boy";
   const state = {
     stage: 0,
     unlocked: Number.isFinite(initialUnlocked) ? Math.max(0, Math.min(stages.length - 1, initialUnlocked)) : 0,
+    character: initialCharacter,
     mode: "ready",
     player: { x: 70, y: 408, vx: 0, vy: 0, grounded: true },
     health: 100,
@@ -282,9 +289,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function buildLevel() {
     const difficulty = state.stage;
-    const length = 2440 + difficulty * 240;
-    const segmentWidth = 405 - difficulty * 15;
-    const gapWidth = 86 + difficulty * 15;
+    const length = (difficulty === 5 ? 4300 : 2700) + difficulty * 260;
+    const segmentWidth = difficulty === 5 ? 330 : 405 - difficulty * 12;
+    const gapWidth = difficulty === 5 ? 150 : 92 + difficulty * 14;
     const platforms = [];
     let x = 0;
     let segmentIndex = 0;
@@ -326,7 +333,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .map((platform) => ({ x: platform.x + platform.width * 0.3, y: platform.y - 32, collected: false }));
     const enemies = [];
     groundSegments.slice(1, -1).forEach((platform, platformIndex) => {
-      const enemyCount = 1 + Math.floor(difficulty / 3);
+      const enemyCount = difficulty === 5 ? 3 : 1 + Math.floor(difficulty / 2);
       const padding = 38;
       const left = platform.x + padding;
       const right = platform.x + platform.width - padding;
@@ -338,7 +345,8 @@ document.addEventListener("DOMContentLoaded", () => {
           left,
           right,
           direction: (platformIndex + index) % 2 ? -1 : 1,
-          speed: 48 + difficulty * 19 + (index % 2) * 12,
+          speed: 48 + difficulty * 24 + (index % 2) * 16 + (difficulty === 5 ? 35 : 0),
+          type: (platformIndex + index) % 2 ? "snake" : "scorpion",
           alive: true
         });
       }
@@ -548,6 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
     state.jumpQueued = false;
     if (state.stage === stages.length - 1) {
       state.mode = "won";
+      state.message = "finalMessage";
       renderInterface();
       return;
     }
@@ -1024,6 +1033,33 @@ document.addEventListener("DOMContentLoaded", () => {
       context.beginPath();
       context.ellipse(0, 15, 20, 5, 0, 0, Math.PI * 2);
       context.fill();
+      if (enemy.type === "snake") {
+        context.strokeStyle = "#2f4e3e";
+        context.lineWidth = 8;
+        context.lineCap = "round";
+        context.beginPath();
+        context.moveTo(-18, 9);
+        context.bezierCurveTo(-8, -4, 8, 15, 18, 1);
+        context.stroke();
+        context.fillStyle = "#55785f";
+        context.beginPath();
+        context.ellipse(18, 0, 7, 5, 0, 0, Math.PI * 2);
+        context.fill();
+        context.fillStyle = "#e8dca5";
+        context.beginPath();
+        context.arc(20, -1, 1.2, 0, Math.PI * 2);
+        context.fill();
+        context.strokeStyle = "#b84a3d";
+        context.lineWidth = 1.2;
+        context.beginPath();
+        context.moveTo(24, 0);
+        context.lineTo(30, -2);
+        context.moveTo(24, 1);
+        context.lineTo(30, 3);
+        context.stroke();
+        context.restore();
+        return;
+      }
       context.strokeStyle = "#4a2922";
       context.lineWidth = 3;
       context.beginPath();
@@ -1056,11 +1092,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const y = ground ? ground.y : 450;
     context.fillStyle = "rgba(12,30,25,.35)";
     context.fillRect(x, y - 112, 6, 112);
-    context.fillStyle = "#d6c18a";
+    context.fillStyle = "#101313";
+    context.fillRect(x + 6, y - 110, 58, 12);
+    context.fillStyle = "#f4f1df";
+    context.fillRect(x + 6, y - 98, 58, 12);
+    context.fillStyle = "#2e734c";
+    context.fillRect(x + 6, y - 86, 58, 12);
+    context.fillStyle = "#b73538";
     context.beginPath();
     context.moveTo(x + 6, y - 110);
-    context.lineTo(x + 58, y - 94);
-    context.lineTo(x + 6, y - 77);
+    context.lineTo(x + 26, y - 98);
+    context.lineTo(x + 6, y - 86);
+    context.closePath();
+    context.fill();
+    context.fillStyle = "#fff";
+    context.beginPath();
+    context.moveTo(x + 15, y - 101);
+    context.lineTo(x + 17, y - 96);
+    context.lineTo(x + 22, y - 96);
+    context.lineTo(x + 18, y - 93);
+    context.lineTo(x + 19, y - 88);
+    context.lineTo(x + 15, y - 91);
+    context.lineTo(x + 11, y - 88);
+    context.lineTo(x + 12, y - 93);
+    context.lineTo(x + 8, y - 96);
+    context.lineTo(x + 13, y - 96);
     context.closePath();
     context.fill();
     context.fillStyle = "#fff1bd";
@@ -1315,6 +1371,27 @@ document.addEventListener("DOMContentLoaded", () => {
     context.fill();
 
     context.translate(0, -bob);
+    if (state.character === "girl") {
+      context.fillStyle = "#302a24";
+      context.beginPath();
+      context.ellipse(0, 10, 8, 7, 0, Math.PI, Math.PI * 2);
+      context.fill();
+      context.beginPath();
+      context.ellipse(-7, 14, 3.2, 8, -.18, 0, Math.PI * 2);
+      context.ellipse(7, 14, 3.2, 8, .18, 0, Math.PI * 2);
+      context.fill();
+      context.fillStyle = "#9b5c78";
+      context.beginPath();
+      context.ellipse(0, 25, 9, 12, 0, 0, Math.PI * 2);
+      context.fill();
+      context.fillStyle = "#dca4bd";
+      context.fillRect(-7, 20, 14, 3);
+    } else {
+      context.fillStyle = "#483b30";
+      context.beginPath();
+      context.ellipse(0, 25, 7.5, 10, 0, 0, Math.PI * 2);
+      context.fill();
+    }
     context.strokeStyle = "#302a24";
     context.lineWidth = 3.2;
     context.lineCap = "round";
@@ -1332,11 +1409,11 @@ document.addEventListener("DOMContentLoaded", () => {
     context.ellipse(5 - stride, 41, 3.5, 2, 0, 0, Math.PI * 2);
     context.fill();
 
-    context.fillStyle = "#744a32";
+    context.fillStyle = state.character === "girl" ? "#9b5c78" : "#744a32";
     context.beginPath();
-    context.ellipse(0, 25, 7.5, 10, 0, 0, Math.PI * 2);
+    context.ellipse(0, 25, state.character === "girl" ? 9 : 7.5, state.character === "girl" ? 12 : 10, 0, 0, Math.PI * 2);
     context.fill();
-    context.fillStyle = "#9c6540";
+    context.fillStyle = state.character === "girl" ? "#dca4bd" : "#9c6540";
     context.beginPath();
     context.ellipse(0, 22, 8.5, 7.5, 0, 0, Math.PI * 2);
     context.fill();
@@ -1417,6 +1494,20 @@ document.addEventListener("DOMContentLoaded", () => {
   restartButton.addEventListener("click", () => beginStage(state.stage));
   pauseButton.addEventListener("click", togglePause);
   soundButton.addEventListener("click", toggleSound);
+
+  document.querySelectorAll(".game-character-button").forEach((button) => {
+    button.classList.toggle("active", button.dataset.character === state.character);
+    button.setAttribute("aria-pressed", String(button.dataset.character === state.character));
+    button.addEventListener("click", () => {
+      state.character = button.dataset.character;
+      localStorage.setItem("jordan-game-character", state.character);
+      document.querySelectorAll(".game-character-button").forEach((item) => {
+        const active = item.dataset.character === state.character;
+        item.classList.toggle("active", active);
+        item.setAttribute("aria-pressed", String(active));
+      });
+    });
+  });
 
   document.querySelectorAll("[data-move]").forEach((button) => {
     const direction = button.dataset.move;
