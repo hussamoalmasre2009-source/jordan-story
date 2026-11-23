@@ -227,6 +227,22 @@ html[dir="ltr"] .main-nav a.active::after { right: auto; left: 0; }
 }
 .a11y-action.active { color: #fff; background: #183c36; }
 .a11y-status { min-height: 20px; margin: 10px 0 0; color: #4a514d; font-size: 12px; }
+.a11y-reader { margin-top: 12px; }
+.a11y-reader[hidden] { display: none; }
+.a11y-reader-label { margin: 0 0 6px; color: #183c36; font-size: 11px; font-weight: 700; }
+.a11y-reader-text {
+  max-height: 210px;
+  overflow-y: auto;
+  border: 1px solid #d8d8cf;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #1b2925;
+  background: #fff;
+  font-size: 14px;
+  line-height: 2;
+  white-space: pre-line;
+  overscroll-behavior: contain;
+}
 
 body.a11y-high-contrast { --ink: #000; --muted: #111; --sand: #fff; background: #fff; }
 body.a11y-high-contrast a, body.a11y-high-contrast p, body.a11y-high-contrast h1,

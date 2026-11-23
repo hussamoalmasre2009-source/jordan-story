@@ -40,6 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
       <button type="button" class="a11y-action" data-mode="stop">إيقاف الصوت</button>
       <button type="button" class="a11y-action" data-mode="reset">إعادة الضبط</button>
     </div>
+    <div class="a11y-reader" hidden>
+      <p class="a11y-reader-label">النص المقروء</p>
+      <div class="a11y-reader-text" tabindex="0"></div>
+    </div>
     <p class="a11y-status" aria-live="polite"></p>
   `;
 
@@ -171,8 +175,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (mode === "speak") {
       const copy = accessibilityCopy[document.documentElement.lang] || accessibilityCopy.ar;
-      if (!("speechSynthesis" in window) || typeof window.SpeechSynthesisUtterance !== "function") {
+      const reader = panel.querySelector(".a11y-reader");
+      const readerText = panel.querySelector(".a11y-reader-text");
+      const speechConstructor = typeof SpeechSynthesisUtterance === "function";
+      if (!("speechSynthesis" in window) || !speechConstructor) {
+        reader.hidden = false;
+        readerText.textContent = (main.innerText || main.textContent || "")
+          .replace(/\n{3,}/g, "\n\n")
+          .trim();
         status.textContent = copy.unsupported;
+        readerText.scrollTop = 0;
+        readerText.focus();
         return;
       }
       window.speechSynthesis.cancel();
@@ -243,6 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.remove(...Object.values(classNames));
       if ("speechSynthesis" in window) window.speechSynthesis.cancel();
       panel.querySelectorAll(".a11y-action").forEach((item) => item.classList.remove("active"));
+      panel.querySelector(".a11y-reader").hidden = true;
       localStorage.removeItem("a11y-settings");
       status.textContent = (accessibilityCopy[document.documentElement.lang] || accessibilityCopy.ar).reset;
       return;
