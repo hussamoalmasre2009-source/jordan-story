@@ -251,7 +251,7 @@ body.a11y-paused *, body.a11y-paused *::before, body.a11y-paused *::after {
 
 @media (max-width: 700px) {
   .a11y-toggle { right: 14px; bottom: 76px; }
-  .a11y-panel { top: 148px; right: 14px; }
+  .a11y-panel { top: 148px; right: 14px; max-height: calc(100vh - 164px); overflow-y: auto; }
   .map-toolbar { grid-template-columns: 1fr; }
   .map-toolbar label { margin-top: 4px; }
   .map-section iframe { height: 420px; }

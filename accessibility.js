@@ -53,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
       modes: ["تباين عالي", "أبيض وأسود", "عمى أحمر", "عمى أخضر", "عمى أزرق", "نص أوضح", "نص أكبر", "خط القراءة", "إيقاف الحركة", "قراءة الصفحة", "إيقاف الصوت", "إعادة الضبط"],
       reading: "يتم قراءة محتوى الصفحة.",
       stopped: "تم إيقاف قراءة الصوت.",
+      unsupported: "قراءة الصفحة غير مدعومة في هذا المتصفح.",
+      noVoice: "لن يتم تشغيل الصوت لأن جهازك لا يملك صوتاً لهذه اللغة.",
       reset: "تمت إعادة الإعدادات.",
       enabled: "تم تفعيل الإعداد.",
       disabled: "تم إلغاء الإعداد."
@@ -64,6 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
       modes: ["High contrast", "Grayscale", "Red color filter", "Green color filter", "Blue color filter", "Clearer text", "Larger text", "Reading font", "Pause motion", "Read page aloud", "Stop speech", "Reset settings"],
       reading: "Reading page content.",
       stopped: "Speech stopped.",
+      unsupported: "Page reading is not supported in this browser.",
+      noVoice: "No voice for this language is available on this device.",
       reset: "Settings reset.",
       enabled: "Setting enabled.",
       disabled: "Setting disabled."
@@ -75,6 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
       modes: ["高コントラスト", "グレースケール", "赤色覚サポート", "緑色覚サポート", "青色覚サポート", "読みやすい文字", "文字を大きく", "読みやすいフォント", "動きを止める", "ページを読み上げる", "読み上げを停止", "設定をリセット"],
       reading: "ページを読み上げています。",
       stopped: "読み上げを停止しました。",
+      unsupported: "このブラウザーではページの読み上げに対応していません。",
+      noVoice: "この言語に対応する音声が端末にありません。",
       reset: "設定をリセットしました。",
       enabled: "設定を有効にしました。",
       disabled: "設定を無効にしました。"
@@ -86,6 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
       modes: ["Высокая контрастность", "Оттенки серого", "Фильтр красного цвета", "Фильтр зелёного цвета", "Фильтр синего цвета", "Чёткий текст", "Крупный текст", "Удобный шрифт", "Отключить анимацию", "Читать страницу", "Остановить чтение", "Сбросить настройки"],
       reading: "Чтение содержимого страницы.",
       stopped: "Чтение остановлено.",
+      unsupported: "Чтение страницы не поддерживается этим браузером.",
+      noVoice: "На устройстве нет голоса для этого языка.",
       reset: "Настройки сброшены.",
       enabled: "Настройка включена.",
       disabled: "Настройка выключена."
@@ -97,6 +105,8 @@ document.addEventListener("DOMContentLoaded", () => {
       modes: ["Contrarium altum", "Grisei colores", "Filtrum rubrum", "Filtrum viride", "Filtrum caeruleum", "Litterae clariores", "Litterae maiores", "Litterae faciles", "Motum siste", "Paginam lege", "Lecturam siste", "Optiones restitue"],
       reading: "Contentum paginae legitur.",
       stopped: "Lectura intermissa est.",
+      unsupported: "Lectio paginae ab hoc navigatore non sustinetur.",
+      noVoice: "Vocem huius linguae hoc instrumentum non habet.",
       reset: "Optiones restitutae sunt.",
       enabled: "Optio activa est.",
       disabled: "Optio inactiva est."
@@ -160,25 +170,78 @@ document.addEventListener("DOMContentLoaded", () => {
     const mode = button.dataset.mode;
 
     if (mode === "speak") {
+      const copy = accessibilityCopy[document.documentElement.lang] || accessibilityCopy.ar;
+      if (!("speechSynthesis" in window) || typeof window.SpeechSynthesisUtterance !== "function") {
+        status.textContent = copy.unsupported;
+        return;
+      }
       window.speechSynthesis.cancel();
       const language = document.documentElement.lang || "ar";
-      const utterance = new SpeechSynthesisUtterance(main.innerText);
-      utterance.lang = { ar: "ar-JO", en: "en-US", ja: "ja-JP", ru: "ru-RU", la: "la" }[language] || "en-US";
-      utterance.rate = 0.9;
-      window.speechSynthesis.speak(utterance);
-      status.textContent = (accessibilityCopy[language] || accessibilityCopy.ar).reading;
+      const speechLanguage = { ar: "ar", en: "en", ja: "ja", ru: "ru", la: "la" }[language] || "ar";
+      const fullText = (main.innerText || main.textContent || "")
+        .replace(/\s+/g, " ")
+        .trim();
+      if (!fullText) {
+        status.textContent = copy.unsupported;
+        return;
+      }
+
+      const chunks = [];
+      let remaining = fullText;
+      while (remaining.length > 0) {
+        if (remaining.length <= 240) {
+          chunks.push(remaining);
+          break;
+        }
+        let splitAt = remaining.lastIndexOf(" ", 240);
+        if (splitAt < 80) splitAt = 240;
+        chunks.push(remaining.slice(0, splitAt).trim());
+        remaining = remaining.slice(splitAt).trim();
+      }
+
+      let voice = null;
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length) {
+        voice = voices.find((item) => item.lang && item.lang.toLowerCase().startsWith(speechLanguage))
+          || voices.find((item) => item.default)
+          || null;
+      }
+
+      let chunkIndex = 0;
+      const speakNextChunk = () => {
+        if (chunkIndex >= chunks.length) {
+          status.textContent = copy.stopped;
+          return;
+        }
+        const utterance = new SpeechSynthesisUtterance(chunks[chunkIndex]);
+        utterance.lang = { ar: "ar-JO", en: "en-US", ja: "ja-JP", ru: "ru-RU", la: "la-Latn" }[language] || "ar-JO";
+        if (voice) utterance.voice = voice;
+        utterance.rate = 0.88;
+        utterance.pitch = 1;
+        utterance.onend = () => {
+          chunkIndex += 1;
+          speakNextChunk();
+        };
+        utterance.onerror = () => {
+          status.textContent = copy.noVoice;
+        };
+        window.speechSynthesis.speak(utterance);
+      };
+
+      status.textContent = copy.reading;
+      speakNextChunk();
       return;
     }
 
     if (mode === "stop") {
-      window.speechSynthesis.cancel();
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
       status.textContent = (accessibilityCopy[document.documentElement.lang] || accessibilityCopy.ar).stopped;
       return;
     }
 
     if (mode === "reset") {
       document.body.classList.remove(...Object.values(classNames));
-      window.speechSynthesis.cancel();
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
       panel.querySelectorAll(".a11y-action").forEach((item) => item.classList.remove("active"));
       localStorage.removeItem("a11y-settings");
       status.textContent = (accessibilityCopy[document.documentElement.lang] || accessibilityCopy.ar).reset;
